@@ -2,22 +2,26 @@ pipeline {
     agent {
       dockerfile true
     }
+    def app
 
     stages {
-        stage('Build') {
+        stage('Build image') {
             steps {
-                echo 'Hello World'
-                sh 'echo myCustomEnvVar = $myCustomEnvVar'
+                app = docker.build("brandonjones085/test")
+
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
+                app.inside {
+                    sh 'echo "Tests passed"'
             }
         }
-        stage('Deploy') {
+        stage('Push image') {
             steps {
-                echo 'Deploying....'
+                docker.withRegistry('https://registry.hub.docker.com', 'git') {
+                   app.push("${env.BUILD_NUMBER}")
+                   app.push("latest")
             }
         }
     }
