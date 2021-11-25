@@ -1,27 +1,35 @@
 pipeline {
+
+    environment {
+       registry = "erdodule/devops"
+       registryCredential = 'dockerhub'
+       dockerImage = ''
+    }
+
     agent {
       dockerfile true
     }
-    def app
 
     stages {
-        stage('Build image') {
+        stage('Build') {
             steps {
-                app = docker.build("devops:backendimgv1.0")
-
+                script {
+                  dockerImage = docker.build registry + ":$BUILD_NUMBER"'
+                }
             }
         }
-        stage('Test') {
+        stage('Push') {
             steps {
-                app.inside {
-                    sh 'echo "Tests passed"'
+                script {
+                  docker.withRegistry( '', registryCredential ) {
+                    dockerImage.push()
+                  }
+                }
             }
         }
-        stage('Push image') {
+        stage('Deploy') {
             steps {
-                docker.withRegistry('https://registry.hub.docker.com', 'git') {
-                   app.push("${env.BUILD_NUMBER}")
-                   app.push("test1")
+                echo 'Deploying....'
             }
         }
     }
