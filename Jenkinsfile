@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Build image') {
             steps {
-                app = docker.build("brandonjones085/test")
+                app = docker.build("devops:backendimgv1.0")
 
             }
         }
@@ -21,7 +21,7 @@ pipeline {
             steps {
                 docker.withRegistry('https://registry.hub.docker.com', 'git') {
                    app.push("${env.BUILD_NUMBER}")
-                   app.push("latest")
+                   app.push("test1")
             }
         }
     }
