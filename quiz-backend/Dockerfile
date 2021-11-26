@@ -1,8 +1,8 @@
 FROM maven:3.6.3-openjdk-11 AS maven_build
 
-COPY quiz-backend/pom.xml /tmp/
+COPY pom.xml /tmp/
 
-COPY quiz-backend/src /tmp/src/
+COPY src /tmp/src/
 
 WORKDIR /tmp/
 

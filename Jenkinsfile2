@@ -16,7 +16,7 @@ pipeline{
         }
         stage('Push') {
             steps {
-                sh 'docker push erdodule/devops:frontendimgv4.1'
+                sh 'docker push erdodule/devops:frontendimgv4.0'
             }
         }
     }
