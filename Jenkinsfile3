@@ -1,0 +1,22 @@
+pipeline{
+
+	agent any
+
+	stages {
+		stage ('Helm deploy'){
+			steps {
+					sh ("/usr/local/bin/helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx")
+					sh ("/usr/local/bin/helm repo update")
+					//sh ("/usr/local/bin/helm install ingress-nginx ingress-nginx/ingress-nginx --create-namespace --namespace ingress-basic")
+
+			}
+		}
+		stage ('Ingress apply'){
+			steps {
+					sh ("/usr/local/bin/kubectl -n jenkins apply -f ingress.yaml")
+
+			}
+		}
+	}
+
+}
