@@ -1,36 +1,28 @@
-pipeline {
-
+pipeline{
+    agent any
     environment {
-       registry = "erdodule/devops"
-       registryCredential = 'dockerhub'
-       dockerImage = ''
+        DOCKERHUB_CREDENTIALS=credentials('dockerhub')
     }
-
-    agent {
-      dockerfile true
-    }
-
     stages {
         stage('Build') {
             steps {
-                script {
-                  dockerImage = docker.build registry + ":$BUILD_NUMBER"'
-                }
+                sh 'docker build -t kontetsu/backend:v02 .'
+            }
+        }
+        stage('Login') {
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
         stage('Push') {
             steps {
-                script {
-                  docker.withRegistry( '', registryCredential ) {
-                    dockerImage.push()
-                  }
-                }
+                sh 'docker push kontetsu/backend:v02'
             }
         }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
+    }
+    post {
+        always {
+            sh 'docker logout'
         }
     }
 }
