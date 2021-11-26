@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: erdodule/devops:frontendimgv4.0
+          image: erdodule/devops:frontendimgv4.1
           imagePullPolicy: Always
           ports:
             - containerPort: 80

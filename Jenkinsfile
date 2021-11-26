@@ -2,6 +2,8 @@ pipeline{
     agent any
     environment {
         DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+        KUBE_CREDENTIALS=credentials('erdokubeconfig')
+        URL=serverUrl("https://erdodns-k8s-7e4698e5.hcp.westeurope.azmk8s.io/")
     }
     stages {
         stage('Build') {
@@ -17,6 +19,19 @@ pipeline{
         stage('Push') {
             steps {
                 sh 'docker push erdodule/devops:backendimgv1.1'
+            }
+        }
+
+         stage('Kube apply') {
+            steps {
+                sh 'kubectl apply -f backend.yaml'
+            }
+        }
+
+        stage ('kube'){
+            steps {
+                 withKubeCredentials([kubectlCredentials: 'KUBE_CREDENTIALS', serverUrl: 'URL']){
+                 sh ("/usr/local/bin/kubectl -n jenkins apply -f backend.yaml")
             }
         }
     }
