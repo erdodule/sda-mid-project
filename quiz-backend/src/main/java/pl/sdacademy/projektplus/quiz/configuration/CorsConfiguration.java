@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfiguration implements WebMvcConfigurer {
 
-    private static final String CORS_ALLOWED_ORIGINS_LOCAL = "http://localhost:4200";
+    private static final String CORS_ALLOWED_ORIGINS_LOCAL = "http://backend:4200";
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
