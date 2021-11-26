@@ -6,7 +6,7 @@ pipeline{
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t devops:backendimgv1.0 .'
+                sh 'docker build -t erdodule/devops:backendimgv1.0 .'
             }
         }
         stage('Login') {
@@ -16,7 +16,7 @@ pipeline{
         }
         stage('Push') {
             steps {
-                sh 'docker push devops:backendimgv1.0'
+                sh 'docker push erdodule/devops:backendimgv1.0'
             }
         }
     }
