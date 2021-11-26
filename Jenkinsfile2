@@ -8,7 +8,7 @@ pipeline{
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t erdodule/devops:frontendimgv4.1 -f Dockerfile2 .'
+                sh 'docker build -t erdodule/devops:frontendimgv4.2 -f Dockerfile2 .'
             }
         }
         stage('Login') {
@@ -18,7 +18,7 @@ pipeline{
         }
         //stage('Push') {
         //    steps {
-        //        sh 'docker push erdodule/devops:frontendimgv4.1'
+        //        sh 'docker push erdodule/devops:frontendimgv4.2'
         //    }
         // }
         stage('Kube apply') {

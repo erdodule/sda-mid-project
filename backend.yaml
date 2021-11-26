@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: quiz-backend
-          image: erdodule/devops:backendimgv1.1
+          image: erdodule/devops:backendimgv1.2
           imagePullPolicy: Always
           ports:
             - name: http
